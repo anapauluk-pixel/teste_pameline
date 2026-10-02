@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Operação Rodízio 🍕</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+            radial-gradient(circle at 10% 20%, #b1cd4f 0, transparent 25%),
+            radial-gradient(circle at 90% 80%, #00995d 0, transparent 30%),
+            #004e4c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: #004e4c;
+    }
+
+    .card {
+        width: min(92%, 650px);
+        min-height: 560px;
+        background: #fff;
+        border-radius: 35px;
+        padding: 40px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 25px 70px rgba(0,0,0,.3);
+        overflow: hidden;
+    }
+
+    .badge {
+        display: inline-block;
+        background: #004e4c;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: bold;
+        transform: rotate(-2deg);
+        margin-bottom: 18px;
+    }
+
+    .pizza {
+        font-size: 70px;
+        animation: pizza 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pizza {
+        0%,100% { transform: rotate(-8deg) scale(1); }
+        50% { transform: rotate(8deg) scale(1.1); }
+    }
+
+    h1 {
+        font-size: clamp(30px, 6vw, 48px);
+        line-height: 1;
+        margin: 10px 0 15px;
+        font-weight: 900;
+    }
+
+    h1 span {
+        color: #00995d;
+    }
+
+    .sub {
+        color: #666;
+        font-size: 17px;
+        margin-bottom: 25px;
+    }
+
+    .alerta {
+        background: #f2f8f5;
+        border: 2px dashed #b1cd4f;
+        padding: 14px;
+        border-radius: 15px;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .botoes {
+        position: relative;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    button {
+        border: none;
+        border-radius: 18px;
+        padding: 18px 25px;
+        font-size: 17px;
+        font-weight: 900;
+        cursor: pointer;
+        transition: .2s;
+        box-shadow: 0 8px 0 rgba(0,0,0,.15);
+    }
+
+    #sim {
+        background: #b1cd4f;
+        color: #004e4c;
+        z-index: 5;
+    }
+
+    #sim:hover {
+        transform: scale(1.08) rotate(-2deg);
+        box-shadow: 0 12px 0 rgba(0,0,0,.15);
+    }
+
+    #nao {
+        background: #eee;
+        color: #777;
+        position: absolute;
+        z-index: 10;
+        transition: left .15s ease, top .15s ease;
+    }
+
+    .contador {
+        margin-top: 10px;
+        color: #999;
+        font-size: 13px;
+    }
+
+    /* RESULTADO */
+
+    #resultado {
+        display: none;
+        animation: aparecer .5s ease;
+    }
+
+    @keyframes aparecer {
+        from {
+            opacity: 0;
+            transform: scale(.7);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .resultado-emoji {
+        font-size: 90px;
+        animation: comemorar .8s infinite alternate;
+    }
+
+    @keyframes comemorar {
+        from { transform: rotate(-10deg) scale(1); }
+        to { transform: rotate(10deg) scale(1.15); }
+    }
+
+    .resultado h2 {
+        font-size: 38px;
+        margin: 10px 0;
+    }
+
+    .resultado p {
+        font-size: 19px;
+        color: #555;
+    }
+
+    .placar {
+        margin: 25px auto;
+        padding: 18px;
+        background: #f2f8f5;
+        border-radius: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .rodizio {
+        color: #00995d;
+        font-size: 27px;
+    }
+
+    .confete {
+        position: fixed;
+        top: -30px;
+        font-size: 25px;
+        animation: cair linear forwards;
+        pointer-events: none;
+        z-index: 100;
+    }
+
+    @keyframes cair {
+        to {
+            transform: translateY(110vh) rotate(720deg);
+        }
+    }
+
+    .assinatura {
+        position: absolute;
+        bottom: 12px;
+        left: 0;
+        right: 0;
+        color: #bbb;
+        font-size: 11px;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div id="votacao">
+
+        <div class="badge">🚨 VOTAÇÃO DE EXTREMA IMPORTÂNCIA 🚨</div>
+
+        <div class="pizza">🍕</div>
+
+        <h1>
+            O Marketing<br>
+            <span>merece um rodízio?</span>
+        </h1>
+
+        <p class="sub">
+            Amandinha, o destino de várias pizzas<br>
+            está literalmente nas suas mãos.
+        </p>
+
+        <div class="alerta" id="frase">
+            ⚠️ Responda com responsabilidade. Ou não.
+        </div>
+
+        <div class="botoes" id="areaBotoes">
+
+            <button id="sim" onclick="aceitou()">
+                🍕 SIM, PELO AMOR DE DEUS
+            </button>
+
+            <button id="nao">
+                ❌ NÃO
+            </button>
+
+        </div>
+
+        <div class="contador" id="contador">
+            Tentativas de dizer NÃO: 0
+        </div>
+
+    </div>
+
+
+    <div id="resultado">
+
+        <div class="resultado-emoji">🍕🥳🍕</div>
+
+        <h2>VITÓRIA DO MARKETING!</h2>
+
+        <p>
+            A democracia foi exercida.<br>
+            A pizza foi autorizada.
+        </p>
+
+        <div class="placar">
+            🏆 DECISÃO OFICIAL<br><br>
+
+            <span class="rodizio">
+                RODÍZIO LIVRE PARA O MARKETING
+            </span>
+        </div>
+
+        <p>
+            Amandinha, não adianta mais.<br>
+            <strong>O povo já decidiu. 😂</strong>
+        </p>
+
+    </div>
+
+    <div class="assinatura">
+        Comissão Organizadora do Rodízio do Marketing™
+    </div>
+
+</div>
+
+
+<script>
+
+const nao = document.getElementById("nao");
+const area = document.getElementById("areaBotoes");
+const contador = document.getElementById("contador");
+const frase = document.getElementById("frase");
+
+let tentativas = 0;
+
+const frases = [
+    "🤨 Tem certeza que você quer clicar nisso?",
+    "🍕 Pense nas pizzas, Amandinha.",
+    "🚨 O botão NÃO está ficando nervoso.",
+    "👀 O Marketing está observando.",
+    "📢 Seu departamento está contando com você.",
+    "🍕 Uma pizza. Só uma pizza. Talvez 14.",
+    "😔 O botão NÃO não representa a vontade popular.",
+    "⚠️ Essa decisão pode impactar o humor do Marketing.",
+    "🫣 Você realmente tentou clicar no NÃO?",
+    "😂 AHAHAHAHAHA quase!"
+];
+
+function fugir() {
+
+    tentativas++;
+
+    contador.innerText =
+        "Tentativas de dizer NÃO: " + tentativas;
+
+    frase.innerText =
+        frases[Math.floor(Math.random() * frases.length)];
+
+    const areaRect = area.getBoundingClientRect();
+    const botaoRect = nao.getBoundingClientRect();
+
+    const maxX = areaRect.width - botaoRect.width;
+    const maxY = areaRect.height - botaoRect.height;
+
+    const x = Math.max(0, Math.random() * maxX);
+    const y = Math.max(0, Math.random() * maxY);
+
+    nao.style.left = x + "px";
+    nao.style.top = y + "px";
+
+    if (tentativas >= 5) {
+        nao.innerText = "😰 NÃO, SOCORRO";
+    }
+
+    if (tentativas >= 10) {
+        nao.innerText = "🏃 EU DESISTO";
+        nao.style.transform = "scale(.8)";
+    }
+}
+
+
+/* Desktop */
+nao.addEventListener("mouseenter", fugir);
+
+
+/* Celular */
+nao.addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    fugir();
+});
+
+
+function aceitou() {
+
+    document.getElementById("votacao").style.display = "none";
+    document.getElementById("resultado").style.display = "block";
+
+    soltarConfetes();
+
+}
+
+
+function soltarConfetes() {
+
+    const emojis = ["🍕", "🎉", "🥳", "🧀", "🍕", "💚", "🔥"];
+
+    for (let i = 0; i < 80; i++) {
+
+        const confete = document.createElement("div");
+
+        confete.className = "confete";
+
+        confete.innerText =
+            emojis[Math.floor(Math.random() * emojis.length)];
+
+        confete.style.left =
+            Math.random() * 100 + "vw";
+
+        confete.style.animationDuration =
+            (2 + Math.random() * 3) + "s";
+
+        confete.style.animationDelay =
+            Math.random() * 1.5 + "s";
+
+        document.body.appendChild(confete);
+
+        setTimeout(() => {
+            confete.remove();
+        }, 6000);
+    }
+}
+
+</script>
+
+</body>
+</html>
