@@ -3,396 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Operação Rodízio 🍕</title>
-
 <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: Arial, Helvetica, sans-serif;
-        background:
-            radial-gradient(circle at 10% 20%, #b1cd4f 0, transparent 25%),
-            radial-gradient(circle at 90% 80%, #00995d 0, transparent 30%),
-            #004e4c;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        color: #004e4c;
-    }
-
-    .card {
-        width: min(92%, 650px);
-        min-height: 560px;
-        background: #fff;
-        border-radius: 35px;
-        padding: 40px;
-        text-align: center;
-        position: relative;
-        box-shadow: 0 25px 70px rgba(0,0,0,.3);
-        overflow: hidden;
-    }
-
-    .badge {
-        display: inline-block;
-        background: #004e4c;
-        color: white;
-        padding: 8px 15px;
-        border-radius: 30px;
-        font-size: 13px;
-        font-weight: bold;
-        transform: rotate(-2deg);
-        margin-bottom: 18px;
-    }
-
-    .pizza {
-        font-size: 70px;
-        animation: pizza 1.5s infinite ease-in-out;
-    }
-
-    @keyframes pizza {
-        0%,100% { transform: rotate(-8deg) scale(1); }
-        50% { transform: rotate(8deg) scale(1.1); }
-    }
-
-    h1 {
-        font-size: clamp(30px, 6vw, 48px);
-        line-height: 1;
-        margin: 10px 0 15px;
-        font-weight: 900;
-    }
-
-    h1 span {
-        color: #00995d;
-    }
-
-    .sub {
-        color: #666;
-        font-size: 17px;
-        margin-bottom: 25px;
-    }
-
-    .alerta {
-        background: #f2f8f5;
-        border: 2px dashed #b1cd4f;
-        padding: 14px;
-        border-radius: 15px;
-        font-weight: bold;
-        margin-bottom: 30px;
-    }
-
-    .botoes {
-        position: relative;
-        height: 150px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    button {
-        border: none;
-        border-radius: 18px;
-        padding: 18px 25px;
-        font-size: 17px;
-        font-weight: 900;
-        cursor: pointer;
-        transition: .2s;
-        box-shadow: 0 8px 0 rgba(0,0,0,.15);
-    }
-
-    #sim {
-        background: #b1cd4f;
-        color: #004e4c;
-        z-index: 5;
-    }
-
-    #sim:hover {
-        transform: scale(1.08) rotate(-2deg);
-        box-shadow: 0 12px 0 rgba(0,0,0,.15);
-    }
-
-    #nao {
-        background: #eee;
-        color: #777;
-        position: absolute;
-        z-index: 10;
-        transition: left .15s ease, top .15s ease;
-    }
-
-    .contador {
-        margin-top: 10px;
-        color: #999;
-        font-size: 13px;
-    }
-
-    /* RESULTADO */
-
-    #resultado {
-        display: none;
-        animation: aparecer .5s ease;
-    }
-
-    @keyframes aparecer {
-        from {
-            opacity: 0;
-            transform: scale(.7);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    .resultado-emoji {
-        font-size: 90px;
-        animation: comemorar .8s infinite alternate;
-    }
-
-    @keyframes comemorar {
-        from { transform: rotate(-10deg) scale(1); }
-        to { transform: rotate(10deg) scale(1.15); }
-    }
-
-    .resultado h2 {
-        font-size: 38px;
-        margin: 10px 0;
-    }
-
-    .resultado p {
-        font-size: 19px;
-        color: #555;
-    }
-
-    .placar {
-        margin: 25px auto;
-        padding: 18px;
-        background: #f2f8f5;
-        border-radius: 20px;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .rodizio {
-        color: #00995d;
-        font-size: 27px;
-    }
-
-    .confete {
-        position: fixed;
-        top: -30px;
-        font-size: 25px;
-        animation: cair linear forwards;
-        pointer-events: none;
-        z-index: 100;
-    }
-
-    @keyframes cair {
-        to {
-            transform: translateY(110vh) rotate(720deg);
-        }
-    }
-
-    .assinatura {
-        position: absolute;
-        bottom: 12px;
-        left: 0;
-        right: 0;
-        color: #bbb;
-        font-size: 11px;
-    }
-
+*{box-sizing:border-box}
+body{
+ margin:0; min-height:100vh; font-family:Arial,Helvetica,sans-serif;
+ background:#004e4c; color:#004e4c; overflow:hidden;
+ display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.bg{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.bg span{position:absolute;font-size:30px;opacity:.12;animation:float 8s linear infinite}
+.bg span:nth-child(1){left:5%;top:15%}.bg span:nth-child(2){left:90%;top:20%;animation-delay:2s}
+.bg span:nth-child(3){left:12%;top:80%;animation-delay:4s}.bg span:nth-child(4){left:80%;top:75%;animation-delay:1s}
+@keyframes float{50%{transform:translateY(-30px) rotate(15deg)}100%{transform:translateY(0) rotate(0)}}
+.card{
+ position:relative; width:min(94%,700px); min-height:610px; background:#fff;
+ border-radius:36px; padding:38px; text-align:center;
+ box-shadow:0 25px 80px rgba(0,0,0,.35); overflow:hidden;
+}
+.topline{font-size:12px;font-weight:900;letter-spacing:1.5px;color:#00995d}
+.badge{
+ display:inline-block;background:#b1cd4f;color:#004e4c;padding:9px 15px;
+ border-radius:999px;font-weight:900;margin:12px 0 18px;transform:rotate(-2deg)
+}
+.pizza{font-size:74px;animation:wiggle 1.2s infinite}
+@keyframes wiggle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg) scale(1.08)}}
+h1{font-size:clamp(34px,7vw,58px);line-height:.95;margin:12px 0;color:#004e4c}
+h1 span{color:#00995d}
+.sub{font-size:17px;color:#666;line-height:1.45;margin:18px 0}
+.alert{
+ background:#f2f8f5;border:2px dashed #b1cd4f;border-radius:16px;
+ padding:14px;font-weight:800;margin:22px auto;max-width:560px
+}
+.area{height:175px;position:relative;margin-top:8px}
+button{
+ border:0;border-radius:18px;padding:18px 23px;font-size:17px;font-weight:900;
+ cursor:pointer;box-shadow:0 7px 0 rgba(0,0,0,.14)
+}
+#sim{background:#b1cd4f;color:#004e4c;position:absolute;left:50%;top:52px;transform:translateX(-110%);z-index:3}
+#sim:hover{transform:translateX(-110%) scale(1.08) rotate(-2deg)}
+#nao{background:#eee;color:#777;position:absolute;left:50%;top:52px;z-index:5;transition:left .14s ease,top .14s ease,transform .14s}
+.contador{font-size:13px;color:#aaa;margin-top:4px}
+#resultado{display:none;padding-top:35px}
+.big{font-size:95px;animation:pop .7s infinite alternate}
+@keyframes pop{to{transform:scale(1.12) rotate(5deg)}}
+#resultado h2{font-size:42px;margin:8px 0;color:#004e4c}
+.resultado-box{background:#f2f8f5;border-radius:22px;padding:22px;margin:25px 0;font-weight:900}
+.resultado-box strong{display:block;font-size:28px;color:#00995d;margin-top:8px}
+.small{color:#777}
+.confete{position:fixed;top:-40px;z-index:100;font-size:25px;pointer-events:none;animation:fall 3.5s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.footer{position:absolute;bottom:13px;left:0;right:0;font-size:10px;color:#bbb}
+.shake{animation:shake .25s}
+@keyframes shake{25%{transform:translateX(5px)}75%{transform:translateX(-5px)}}
+@media(max-width:600px){
+ .card{padding:28px 20px;min-height:600px}
+ #sim{transform:translateX(-105%)}
+ #sim:hover{transform:translateX(-105%)}
+}
 </style>
 </head>
-
 <body>
+<div class="bg"><span>🍕</span><span>🧀</span><span>🍕</span><span>🥤</span></div>
 
-<div class="card">
+<div class="card" id="card">
+  <div id="votacao">
+    <div class="topline">COMISSÃO EXTRAOFICIAL DO MARKETING™</div>
+    <div class="badge">🚨 VOTAÇÃO DE INTERESSE PÚBLICO</div>
+    <div class="pizza">🍕</div>
 
-    <div id="votacao">
+    <h1>AMANDINHA,<br><span>LIBERA O RODÍZIO.</span></h1>
 
-        <div class="badge">🚨 VOTAÇÃO DE EXTREMA IMPORTÂNCIA 🚨</div>
+    <p class="sub">
+      O Marketing trabalhou. Criou. Revisou.<br>
+      Aprovou. Reprovou. Refez.<br>
+      Agora só falta uma coisa: <b>pizza.</b>
+    </p>
 
-        <div class="pizza">🍕</div>
+    <div class="alert" id="frase">⚠️ Uma decisão que pode mudar o rumo da gastronomia corporativa.</div>
 
-        <h1>
-            O Marketing<br>
-            <span>merece um rodízio?</span>
-        </h1>
-
-        <p class="sub">
-            Amandinha, o destino de várias pizzas<br>
-            está literalmente nas suas mãos.
-        </p>
-
-        <div class="alerta" id="frase">
-            ⚠️ Responda com responsabilidade. Ou não.
-        </div>
-
-        <div class="botoes" id="areaBotoes">
-
-            <button id="sim" onclick="aceitou()">
-                🍕 SIM, PELO AMOR DE DEUS
-            </button>
-
-            <button id="nao">
-                ❌ NÃO
-            </button>
-
-        </div>
-
-        <div class="contador" id="contador">
-            Tentativas de dizer NÃO: 0
-        </div>
-
+    <div class="area" id="area">
+      <button id="sim" onclick="aceitou()">🍕 LIBERAR O RODÍZIO</button>
+      <button id="nao">❌ NÃO</button>
     </div>
 
+    <div class="contador" id="contador">Tentativas de impedir o rodízio: 0</div>
+  </div>
 
-    <div id="resultado">
+  <div id="resultado">
+    <div class="big">🍕🥳🍕</div>
+    <h2>O POVO VENCEU!</h2>
+    <p class="sub">Depois de uma votação totalmente imparcial e absolutamente confiável...</p>
 
-        <div class="resultado-emoji">🍕🥳🍕</div>
-
-        <h2>VITÓRIA DO MARKETING!</h2>
-
-        <p>
-            A democracia foi exercida.<br>
-            A pizza foi autorizada.
-        </p>
-
-        <div class="placar">
-            🏆 DECISÃO OFICIAL<br><br>
-
-            <span class="rodizio">
-                RODÍZIO LIVRE PARA O MARKETING
-            </span>
-        </div>
-
-        <p>
-            Amandinha, não adianta mais.<br>
-            <strong>O povo já decidiu. 😂</strong>
-        </p>
-
+    <div class="resultado-box">
+      DECISÃO OFICIAL DO MARKETING:
+      <strong>RODÍZIO LIVRE! 🍕</strong>
     </div>
 
-    <div class="assinatura">
-        Comissão Organizadora do Rodízio do Marketing™
-    </div>
+    <p class="small">
+      Amandinha, infelizmente o botão “NÃO” fugiu.<br>
+      Não podemos mais voltar atrás. 😂
+    </p>
+  </div>
 
+  <div class="footer">Documento oficial • válido somente para fins de pizza</div>
 </div>
 
-
 <script>
+const nao=document.getElementById('nao');
+const area=document.getElementById('area');
+const frase=document.getElementById('frase');
+const contador=document.getElementById('contador');
+const card=document.getElementById('card');
+let tentativas=0;
 
-const nao = document.getElementById("nao");
-const area = document.getElementById("areaBotoes");
-const contador = document.getElementById("contador");
-const frase = document.getElementById("frase");
-
-let tentativas = 0;
-
-const frases = [
-    "🤨 Tem certeza que você quer clicar nisso?",
-    "🍕 Pense nas pizzas, Amandinha.",
-    "🚨 O botão NÃO está ficando nervoso.",
-    "👀 O Marketing está observando.",
-    "📢 Seu departamento está contando com você.",
-    "🍕 Uma pizza. Só uma pizza. Talvez 14.",
-    "😔 O botão NÃO não representa a vontade popular.",
-    "⚠️ Essa decisão pode impactar o humor do Marketing.",
-    "🫣 Você realmente tentou clicar no NÃO?",
-    "😂 AHAHAHAHAHA quase!"
+const frases=[
+"🤨 Tem certeza? Pense com carinho... e com fome.",
+"🍕 A pizza está decepcionada com você.",
+"🚨 O botão NÃO foi considerado suspeito.",
+"👀 O Marketing está olhando.",
+"📢 97% do Marketing recomenda pizza. A fonte somos nós.",
+"😔 Até o PowerPoint é a favor do rodízio.",
+"🍕 Uma decisão dessas merece queijo.",
+"⚠️ O botão NÃO apresentou comportamento evasivo.",
+"😂 Você realmente achou que ia clicar nele?",
+"🏃 O NÃO pediu demissão e saiu correndo."
 ];
 
-function fugir() {
+function fugir(){
+ tentativas++;
+ contador.textContent="Tentativas de impedir o rodízio: "+tentativas;
+ frase.textContent=frases[Math.floor(Math.random()*frases.length)];
 
-    tentativas++;
+ const r=area.getBoundingClientRect();
+ const b=nao.getBoundingClientRect();
+ const maxX=Math.max(0,r.width-b.width-5);
+ const maxY=Math.max(0,r.height-b.height-5);
 
-    contador.innerText =
-        "Tentativas de dizer NÃO: " + tentativas;
+ nao.style.left=(Math.random()*maxX)+"px";
+ nao.style.top=(Math.random()*maxY)+"px";
+ nao.style.transform=`rotate(${Math.random()*20-10}deg)`;
 
-    frase.innerText =
-        frases[Math.floor(Math.random() * frases.length)];
+ if(tentativas===5) nao.textContent="😰 NÃO, SOCORRO";
+ if(tentativas===10) nao.textContent="🏃 EU DESISTO";
+ if(tentativas>=15) nao.textContent="🫠 TÁ BOM";
+}
+nao.addEventListener('mouseenter',fugir);
+nao.addEventListener('touchstart',e=>{e.preventDefault();fugir()});
 
-    const areaRect = area.getBoundingClientRect();
-    const botaoRect = nao.getBoundingClientRect();
-
-    const maxX = areaRect.width - botaoRect.width;
-    const maxY = areaRect.height - botaoRect.height;
-
-    const x = Math.max(0, Math.random() * maxX);
-    const y = Math.max(0, Math.random() * maxY);
-
-    nao.style.left = x + "px";
-    nao.style.top = y + "px";
-
-    if (tentativas >= 5) {
-        nao.innerText = "😰 NÃO, SOCORRO";
-    }
-
-    if (tentativas >= 10) {
-        nao.innerText = "🏃 EU DESISTO";
-        nao.style.transform = "scale(.8)";
-    }
+function aceitou(){
+ document.getElementById('votacao').style.display='none';
+ document.getElementById('resultado').style.display='block';
+ card.classList.add('shake');
+ confetes();
 }
 
-
-/* Desktop */
-nao.addEventListener("mouseenter", fugir);
-
-
-/* Celular */
-nao.addEventListener("touchstart", function(e) {
-    e.preventDefault();
-    fugir();
-});
-
-
-function aceitou() {
-
-    document.getElementById("votacao").style.display = "none";
-    document.getElementById("resultado").style.display = "block";
-
-    soltarConfetes();
-
+function confetes(){
+ const emojis=["🍕","🎉","🥳","🧀","🍕","💚","🔥","🍕","🍻"];
+ for(let i=0;i<90;i++){
+  const c=document.createElement('div');
+  c.className='confete';
+  c.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  c.style.left=Math.random()*100+'vw';
+  c.style.animationDuration=(2+Math.random()*3)+'s';
+  c.style.animationDelay=Math.random()*1.2+'s';
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),6000);
+ }
 }
-
-
-function soltarConfetes() {
-
-    const emojis = ["🍕", "🎉", "🥳", "🧀", "🍕", "💚", "🔥"];
-
-    for (let i = 0; i < 80; i++) {
-
-        const confete = document.createElement("div");
-
-        confete.className = "confete";
-
-        confete.innerText =
-            emojis[Math.floor(Math.random() * emojis.length)];
-
-        confete.style.left =
-            Math.random() * 100 + "vw";
-
-        confete.style.animationDuration =
-            (2 + Math.random() * 3) + "s";
-
-        confete.style.animationDelay =
-            Math.random() * 1.5 + "s";
-
-        document.body.appendChild(confete);
-
-        setTimeout(() => {
-            confete.remove();
-        }, 6000);
-    }
-}
-
 </script>
-
 </body>
 </html>
