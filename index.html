@@ -42,7 +42,7 @@ button{
 }
 #sim{background:#b1cd4f;color:#004e4c;position:absolute;left:50%;top:52px;transform:translateX(-110%);z-index:3}
 #sim:hover{transform:translateX(-110%) scale(1.08) rotate(-2deg)}
-#nao{background:#eee;color:#777;position:absolute;left:50%;top:52px;z-index:5;transition:left .14s ease,top .14s ease,transform .14s}
+#nao{background:#eee;color:#777;position:absolute;left:50%;top:52px;z-index:5;transition:left .035s linear,top .035s linear,transform .035s}
 .contador{font-size:13px;color:#aaa;margin-top:4px}
 #resultado{display:none;padding-top:35px}
 .big{font-size:95px;animation:pop .7s infinite alternate}
@@ -75,9 +75,10 @@ button{
     <h1>AMANDINHA,<br><span>LIBERA O RODÍZIO.</span></h1>
 
     <p class="sub">
-      O Marketing trabalhou. Criou. Revisou.<br>
-      Aprovou. Reprovou. Refez.<br>
-      Agora só falta uma coisa: <b>pizza.</b>
+      Ela prometeu.<br>
+      Ela deu o bolo em todo mundo.<br>
+      Nós esperamos muito tempo.<br>
+      Agora só nos resta uma coisa: <b>pizza.</b>
     </p>
 
     <div class="alert" id="frase">⚠️ Uma decisão que pode mudar o rumo da gastronomia corporativa.</div>
@@ -149,6 +150,7 @@ function fugir(){
  if(tentativas>=15) nao.textContent="🫠 TÁ BOM";
 }
 nao.addEventListener('mouseenter',fugir);
+nao.addEventListener('mouseover',fugir);
 nao.addEventListener('touchstart',e=>{e.preventDefault();fugir()});
 
 function aceitou(){
